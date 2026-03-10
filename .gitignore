@@ -13,3 +13,4 @@ src/data/generated/*.json
 .env
 .env.*
 !.env.example
+.worktrees/
