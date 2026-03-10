@@ -1,0 +1,35 @@
+---
+import ItemActionBar from '../../components/actions/ItemActionBar.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import PalettePreview from '../../components/colors/PalettePreview.astro';
+import { getColors } from '../../lib/content/get-colors';
+
+export async function getStaticPaths() {
+  const colors = await getColors();
+  return colors.map((palette) => ({ params: { slug: palette.slug }, props: { palette } }));
+}
+
+const { palette } = Astro.props;
+const href = `/colors/${palette.slug}`;
+---
+
+<BaseLayout title={`${palette.title} · 配色展示`} description={palette.summary}>
+  <section class="container-shell py-16 md:py-20 space-y-8">
+    <Breadcrumbs items={[{ label: '首頁', href: '/' }, { label: '配色庫', href: '/colors' }, { label: palette.title }]} />
+    <div class="space-y-4">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Palette Detail</p>
+      <h1 class="text-5xl font-semibold tracking-tight text-slate-950">{palette.title}</h1>
+      <p class="max-w-3xl text-lg leading-8 text-slate-600">{palette.summary}</p>
+    </div>
+    <ItemActionBar
+      id={`colors:${palette.slug}`}
+      title={palette.title}
+      href={href}
+      dataset="配色"
+      summary={palette.summary}
+      relatedLinks={[{ href: '/styles', label: '搭配風格' }]}
+    />
+    <PalettePreview palette={palette} />
+  </section>
+</BaseLayout>

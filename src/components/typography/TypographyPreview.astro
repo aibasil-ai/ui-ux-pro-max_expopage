@@ -1,0 +1,22 @@
+---
+import type { TypographyRecord } from '../../lib/content/get-typography';
+
+interface Props {
+  fontPair: TypographyRecord;
+}
+
+const { fontPair } = Astro.props;
+---
+
+<div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-950/5">
+  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{fontPair.title}</p>
+  <h2 class="mt-4 text-4xl font-semibold text-slate-950">Aa — {fontPair.raw['Heading Font']}</h2>
+  <p class="mt-4 text-base leading-8 text-slate-600">
+    這是一段用來比較內文字體節奏、可讀性與品牌語氣的範例文字。Body font: {fontPair.raw['Body Font']}。
+  </p>
+  <div class="mt-6 grid gap-4 md:grid-cols-3">
+    <div class="rounded-[1.5rem] bg-slate-50 p-4"><p class="text-xs text-slate-500">Category</p><p class="mt-2 text-sm font-semibold text-slate-900">{fontPair.category}</p></div>
+    <div class="rounded-[1.5rem] bg-slate-50 p-4"><p class="text-xs text-slate-500">Mood</p><p class="mt-2 text-sm font-semibold text-slate-900">{fontPair.raw['Mood/Style Keywords']}</p></div>
+    <div class="rounded-[1.5rem] bg-slate-50 p-4"><p class="text-xs text-slate-500">Best For</p><p class="mt-2 text-sm font-semibold text-slate-900">{fontPair.summary}</p></div>
+  </div>
+</div>

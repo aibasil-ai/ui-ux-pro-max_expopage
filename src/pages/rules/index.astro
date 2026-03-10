@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import { getUxGuidelines, getUiReasoning, getWebInterfaceRules } from '../../lib/content/get-rules';
+
+const [ux, reasoning, special] = await Promise.all([getUxGuidelines(), getUiReasoning(), getWebInterfaceRules()]);
+const sections = [
+  { title: 'UX 指南', href: '/rules/ux', count: ux.length, description: '操作、可及性、導覽與常見介面錯誤。' },
+  { title: '推理規則', href: '/rules/reasoning', count: reasoning.length, description: '產品類型如何被映射到風格、色彩與版型。' },
+  { title: '專門規則', href: '/rules/special', count: special.length, description: 'Web 介面與平台層面的專業規則。' }
+];
+---
+
+<BaseLayout title="規則中心 · UI UX Pro Max" description="瀏覽 UX、推理與專門規則，理解系統為何這樣推薦。">
+  <section class="container-shell space-y-8 py-16 md:py-20">
+    <Breadcrumbs items={[{ label: '首頁', href: '/' }, { label: '規則中心' }]} />
+    <div class="space-y-4">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Rules Center</p>
+      <h1 class="text-5xl font-semibold tracking-tight text-slate-950">規則中心</h1>
+      <p class="max-w-3xl text-lg leading-8 text-slate-600">這裡不是單純列資料，而是幫使用者理解推薦背後的 UX 與推理邏輯。</p>
+    </div>
+    <div class="grid gap-6 lg:grid-cols-3">
+      {sections.map((section) => (
+        <a href={section.href} class="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-sm shadow-slate-950/5 transition hover:-translate-y-1 hover:shadow-lg">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{section.count} 條</p>
+          <h2 class="mt-3 text-2xl font-semibold text-slate-950">{section.title}</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-600">{section.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

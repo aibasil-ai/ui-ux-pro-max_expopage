@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCategoryGrid from '../components/home/ProductCategoryGrid.astro';
+import ProductSubcategoryPicker from '../components/home/ProductSubcategoryPicker';
+import { getProducts } from '../lib/content/get-products';
+import { buildProductTaxonomy } from '../lib/product-taxonomy';
+
+const products = await getProducts();
+const categories = buildProductTaxonomy(products);
+const pickerCategories = categories.map((category) => ({
+  id: category.id,
+  name: category.name,
+  description: category.description,
+  products: category.products.map((product) => ({
+    slug: product.slug,
+    title: product.title
+  }))
+}));
+---
+
+<BaseLayout title="UI UX Pro Max 展示系統" description="先選產品類型，再探索風格與 Prompt 組合的展示系統。">
+  <section class="container-shell py-16 md:py-20">
+    <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
+      <div class="space-y-6">
+        <p class="inline-flex rounded-full border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-700">
+          Prompt 使用者優先的 UI / UX 參考系統
+        </p>
+        <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-slate-950 md:text-6xl">
+          先選產品類型，再看哪一種風格、配色與 Prompt 組合最適合你。
+        </h1>
+        <p class="max-w-3xl text-lg leading-8 text-slate-600">
+          這個展示系統會把 `ui-ux-pro-max` 的文字知識轉成可看的頁面範例，幫你先看懂風格，再更精準地描述給 AI。
+        </p>
+      </div>
+      <div class="rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-sm shadow-slate-950/5">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">目前資料源</p>
+        <dl class="mt-5 grid grid-cols-2 gap-4 text-sm text-slate-600">
+          <div><dt class="font-semibold text-slate-900">67</dt><dd>UI 風格</dd></div>
+          <div><dt class="font-semibold text-slate-900">96</dt><dd>配色方案</dd></div>
+          <div><dt class="font-semibold text-slate-900">57</dt><dd>字體組合</dd></div>
+          <div><dt class="font-semibold text-slate-900">25</dt><dd>圖表類型</dd></div>
+          <div><dt class="font-semibold text-slate-900">99</dt><dd>UX 指南</dd></div>
+          <div><dt class="font-semibold text-slate-900">100</dt><dd>推理規則</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-shell pb-8">
+    <ProductCategoryGrid categories={categories} />
+  </section>
+
+  <section id="product-picker" class="container-shell pb-20 pt-8">
+    <div class="mb-6 max-w-2xl space-y-3">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">產品入口</p>
+      <h2 class="text-3xl font-semibold text-slate-950">從產品脈絡開始收斂</h2>
+      <p class="text-base leading-7 text-slate-600">
+        先選產品大類，再選細類，系統會帶你進入對應的推薦頁，後續再加入完整組合、風格篩選與 Prompt builder。
+      </p>
+    </div>
+
+    <ProductSubcategoryPicker client:load categories={pickerCategories} />
+  </section>
+</BaseLayout>

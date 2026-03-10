@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/navigation/Breadcrumbs.astro';
+import RuleDetail from '../../../components/rules/RuleDetail.astro';
+import { getUxGuidelines } from '../../../lib/content/get-rules';
+
+export async function getStaticPaths() {
+  const rules = await getUxGuidelines();
+  return rules.map((rule) => ({ params: { slug: rule.slug }, props: { rule } }));
+}
+
+const { rule } = Astro.props;
+---
+
+<BaseLayout title={`${rule.title} · UX 指南`} description={rule.summary}>
+  <section class="container-shell space-y-8 py-16 md:py-20">
+    <Breadcrumbs items={[{ label: '首頁', href: '/' }, { label: '規則中心', href: '/rules' }, { label: 'UX 指南', href: '/rules/ux' }, { label: rule.title }]} />
+    <RuleDetail rule={rule} mode="ux" />
+  </section>
+</BaseLayout>

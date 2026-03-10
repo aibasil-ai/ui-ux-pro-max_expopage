@@ -1,0 +1,20 @@
+---
+import GlobalSearch from '../search/GlobalSearch';
+---
+
+<header class="sticky top-0 z-20 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
+  <div class="container-shell flex flex-col gap-4 py-4 lg:flex-row lg:items-center lg:justify-between">
+    <a href="/" class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-900">UI UX Pro Max</a>
+
+    <nav class="flex flex-wrap items-center gap-3 text-sm text-slate-600 lg:gap-5">
+      <a href="/#product-picker" class="hover:text-slate-950">產品入口</a>
+      <a href="/styles" class="hover:text-slate-950">風格庫</a>
+      <a href="/colors" class="hover:text-slate-950">配色庫</a>
+      <a href="/typography" class="hover:text-slate-950">字體庫</a>
+      <a href="/charts" class="hover:text-slate-950">圖表庫</a>
+      <a href="/rules" class="hover:text-slate-950">規則中心</a>
+    </nav>
+
+    <GlobalSearch client:load />
+  </div>
+</header>

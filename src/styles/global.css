@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --page-bg: #f8fafc;
+  --page-text: #0f172a;
+  --page-muted: #475569;
+  --page-border: rgba(15, 23, 42, 0.08);
+  --page-surface: rgba(255, 255, 255, 0.8);
+  --page-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+  --focus-ring: #f97316;
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(79, 70, 229, 0.08), transparent 30%),
+    linear-gradient(180deg, #ffffff 0%, var(--page-bg) 100%);
+  color: var(--page-text);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  transition: color 200ms ease, background-color 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.container-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.glass-panel {
+  border: 1px solid var(--page-border);
+  background: var(--page-surface);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--page-shadow);
+}

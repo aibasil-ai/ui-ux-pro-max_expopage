@@ -1,0 +1,35 @@
+---
+import ItemActionBar from '../../components/actions/ItemActionBar.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import ChartPreviewFrame from '../../components/charts/ChartPreviewFrame.astro';
+import { getCharts } from '../../lib/content/get-charts';
+
+export async function getStaticPaths() {
+  const charts = await getCharts();
+  return charts.map((chart) => ({ params: { slug: chart.slug }, props: { chart } }));
+}
+
+const { chart } = Astro.props;
+const href = `/charts/${chart.slug}`;
+---
+
+<BaseLayout title={`${chart.title} · 圖表展示`} description={chart.summary}>
+  <section class="container-shell py-16 md:py-20 space-y-8">
+    <Breadcrumbs items={[{ label: '首頁', href: '/' }, { label: '圖表庫', href: '/charts' }, { label: chart.title }]} />
+    <div class="space-y-4">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Chart Detail</p>
+      <h1 class="text-5xl font-semibold tracking-tight text-slate-950">{chart.title}</h1>
+      <p class="max-w-3xl text-lg leading-8 text-slate-600">{chart.summary}</p>
+    </div>
+    <ItemActionBar
+      id={`charts:${chart.slug}`}
+      title={chart.title}
+      href={href}
+      dataset="圖表"
+      summary={chart.summary}
+      relatedLinks={[{ href: '/rules/ux', label: '查看圖表 UX 指南' }]}
+    />
+    <ChartPreviewFrame chart={chart} />
+  </section>
+</BaseLayout>

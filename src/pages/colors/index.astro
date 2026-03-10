@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import PalettePreview from '../../components/colors/PalettePreview.astro';
+import { getColors } from '../../lib/content/get-colors';
+
+const palettes = await getColors();
+---
+
+<BaseLayout title="配色庫 · UI UX Pro Max" description="瀏覽 96 組配色方案與實際套用效果。">
+  <section class="container-shell py-16 md:py-20 space-y-8">
+    <Breadcrumbs items={[{ label: '首頁', href: '/' }, { label: '配色庫' }]} />
+    <div class="space-y-4">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Color Library</p>
+      <h1 class="text-5xl font-semibold tracking-tight text-slate-950">96 組配色方案</h1>
+    </div>
+    <div class="grid gap-6 lg:grid-cols-2">
+      {palettes.map((palette) => (
+        <a href={`/colors/${palette.slug}`}>
+          <PalettePreview palette={palette} />
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

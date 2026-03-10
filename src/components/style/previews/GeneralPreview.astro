@@ -1,0 +1,45 @@
+---
+import PreviewFrame from '../PreviewFrame.astro';
+import type { StyleRecord } from '../../../lib/content/get-styles';
+
+interface Props {
+  style: StyleRecord;
+  accentMode: string;
+}
+
+const { style, accentMode } = Astro.props;
+const primary = style.raw['Primary Colors'] || 'Monochrome + accent';
+const secondary = style.raw['Secondary Colors'] || 'Supportive tones';
+---
+
+<PreviewFrame title={`${style.title} / General`} accentMode={accentMode}>
+  <div class="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+    <div class="space-y-4">
+      <div class="rounded-[1.75rem] border border-white/50 bg-white/70 p-6 backdrop-blur">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Core Message</p>
+        <h3 class="mt-3 text-3xl font-semibold text-slate-950">{style.title}</h3>
+        <p class="mt-3 text-sm leading-7 text-slate-600">{style.raw['Keywords']}</p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="rounded-[1.5rem] border border-white/50 bg-white/65 p-5">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Primary Palette</p>
+          <p class="mt-2 text-sm leading-6 text-slate-700">{primary}</p>
+        </div>
+        <div class="rounded-[1.5rem] border border-white/50 bg-white/65 p-5">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Secondary Palette</p>
+          <p class="mt-2 text-sm leading-6 text-slate-700">{secondary}</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid gap-4">
+      <div class="rounded-[1.5rem] border border-slate-200 bg-slate-950 p-5 text-white">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Effects</p>
+        <p class="mt-3 text-sm leading-7 text-slate-200">{style.raw['Effects & Animation']}</p>
+      </div>
+      <div class="rounded-[1.5rem] border border-white/50 bg-white/80 p-5">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Implementation</p>
+        <p class="mt-3 text-sm leading-7 text-slate-700">{style.raw['CSS/Technical Keywords']}</p>
+      </div>
+    </div>
+  </div>
+</PreviewFrame>

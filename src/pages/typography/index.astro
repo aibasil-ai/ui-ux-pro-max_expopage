@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import TypographyPreview from '../../components/typography/TypographyPreview.astro';
+import { getTypography } from '../../lib/content/get-typography';
+
+const fontPairs = await getTypography();
+---
+
+<BaseLayout title="字體庫 · UI UX Pro Max" description="瀏覽 57 組字體組合與其情緒調性。">
+  <section class="container-shell py-16 md:py-20 space-y-8">
+    <Breadcrumbs items={[{ label: '首頁', href: '/' }, { label: '字體庫' }]} />
+    <div class="space-y-4">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Typography Library</p>
+      <h1 class="text-5xl font-semibold tracking-tight text-slate-950">57 組字體展示</h1>
+    </div>
+    <div class="grid gap-6 lg:grid-cols-2">
+      {fontPairs.map((fontPair) => (
+        <a href={`/typography/${fontPair.slug}`}>
+          <TypographyPreview fontPair={fontPair} />
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

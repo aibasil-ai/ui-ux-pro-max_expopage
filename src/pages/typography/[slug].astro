@@ -1,0 +1,35 @@
+---
+import ItemActionBar from '../../components/actions/ItemActionBar.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import TypographyPreview from '../../components/typography/TypographyPreview.astro';
+import { getTypography } from '../../lib/content/get-typography';
+
+export async function getStaticPaths() {
+  const fontPairs = await getTypography();
+  return fontPairs.map((fontPair) => ({ params: { slug: fontPair.slug }, props: { fontPair } }));
+}
+
+const { fontPair } = Astro.props;
+const href = `/typography/${fontPair.slug}`;
+---
+
+<BaseLayout title={`${fontPair.title} · 字體展示`} description={fontPair.summary}>
+  <section class="container-shell py-16 md:py-20 space-y-8">
+    <Breadcrumbs items={[{ label: '首頁', href: '/' }, { label: '字體庫', href: '/typography' }, { label: fontPair.title }]} />
+    <div class="space-y-4">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Typography Detail</p>
+      <h1 class="text-5xl font-semibold tracking-tight text-slate-950">{fontPair.title}</h1>
+      <p class="max-w-3xl text-lg leading-8 text-slate-600">{fontPair.summary}</p>
+    </div>
+    <ItemActionBar
+      id={`typography:${fontPair.slug}`}
+      title={fontPair.title}
+      href={href}
+      dataset="字體"
+      summary={fontPair.summary}
+      relatedLinks={[{ href: '/styles', label: '搭配風格' }]}
+    />
+    <TypographyPreview fontPair={fontPair} />
+  </section>
+</BaseLayout>

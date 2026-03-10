@@ -1,0 +1,46 @@
+---
+import FavoriteButton from '../favorites/FavoriteButton';
+import CompareButton from '../compare/CompareButton';
+
+interface RelatedLink {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  id: string;
+  title: string;
+  href: string;
+  dataset: string;
+  summary?: string;
+  relatedLinks?: RelatedLink[];
+  compact?: boolean;
+}
+
+const {
+  id,
+  title,
+  href,
+  dataset,
+  summary,
+  relatedLinks = [],
+  compact = false
+} = Astro.props;
+
+const favoriteItem = { id, title, href, dataset };
+const compareItem = { id, title, href, dataset, summary };
+const linkClass = compact
+  ? 'rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 hover:border-slate-950 hover:text-slate-950'
+  : 'rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:border-slate-950 hover:text-slate-950';
+---
+
+<div class:list={[
+  'flex flex-wrap items-center gap-3',
+  compact && 'gap-2'
+]}>
+  <FavoriteButton client:load item={favoriteItem} />
+  <CompareButton client:load item={compareItem} />
+  {relatedLinks.map((link) => (
+    <a href={link.href} class={linkClass}>{link.label}</a>
+  ))}
+</div>

@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import ChartPreviewFrame from '../../components/charts/ChartPreviewFrame.astro';
+import { getCharts } from '../../lib/content/get-charts';
+
+const charts = await getCharts();
+---
+
+<BaseLayout title="圖表庫 · UI UX Pro Max" description="瀏覽 25 種圖表類型與其適用資料情境。">
+  <section class="container-shell py-16 md:py-20 space-y-8">
+    <Breadcrumbs items={[{ label: '首頁', href: '/' }, { label: '圖表庫' }]} />
+    <div class="space-y-4">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Chart Library</p>
+      <h1 class="text-5xl font-semibold tracking-tight text-slate-950">25 種圖表展示</h1>
+    </div>
+    <div class="grid gap-6 lg:grid-cols-2">
+      {charts.map((chart) => (
+        <a href={`/charts/${chart.slug}`}>
+          <ChartPreviewFrame chart={chart} />
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

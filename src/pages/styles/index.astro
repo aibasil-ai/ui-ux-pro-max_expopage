@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import StyleIndexFilters from '../../components/style/StyleIndexFilters';
+import { getStyles } from '../../lib/content/get-styles';
+import { getStyleManifest } from '../../lib/style-manifests';
+
+const styles = await getStyles();
+const items = styles.map((style) => {
+  const manifest = getStyleManifest(style);
+  return {
+    slug: style.slug,
+    title: style.title,
+    category: style.category,
+    summary: style.summary,
+    accentMode: manifest.accentMode,
+    heroVariant: manifest.heroVariant,
+    previewVariant: manifest.previewVariant,
+    performance: style.raw['Performance']
+  };
+});
+---
+
+<BaseLayout title="風格索引 · UI UX Pro Max" description="瀏覽 67 種 UI 風格並快速切換到 detail page。">
+  <section class="container-shell py-16 md:py-20 space-y-8">
+    <Breadcrumbs items={[{ label: '首頁', href: '/' }, { label: '風格索引' }]} />
+    <div class="space-y-4">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Style Library</p>
+      <h1 class="text-5xl font-semibold tracking-tight text-slate-950">67 種風格索引頁</h1>
+      <p class="max-w-3xl text-lg leading-8 text-slate-600">先用類型或關鍵字收斂，再進入每一種 style 的獨立展示頁。</p>
+    </div>
+    <StyleIndexFilters client:load items={items} />
+  </section>
+</BaseLayout>

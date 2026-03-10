@@ -1,0 +1,23 @@
+---
+import type { StyleRecord } from '../../../lib/content/get-styles';
+import type { StyleManifest } from '../../../lib/style-manifests/types';
+interface Props { style: StyleRecord; manifest: StyleManifest; }
+const { style, manifest } = Astro.props;
+---
+<section class="overflow-hidden rounded-[2.75rem] border border-white/40 bg-slate-950 p-8 text-white shadow-sm shadow-slate-950/20">
+  <div class="relative">
+    <div class="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-cyan-400/30 blur-3xl"></div>
+    <div class="absolute right-0 top-10 h-48 w-48 rounded-full bg-fuchsia-500/20 blur-3xl"></div>
+    <div class="relative grid gap-6 xl:grid-cols-[1.1fr_0.9fr] xl:items-end">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.22em] text-white/60">{manifest.heroKicker}</p>
+        <h1 class="mt-4 text-5xl font-semibold tracking-tight md:text-6xl">{style.title}</h1>
+        <p class="mt-5 max-w-2xl text-lg leading-8 text-white/75">{manifest.perspective}</p>
+      </div>
+      <div class="rounded-[1.75rem] border border-white/20 bg-white/10 p-6 backdrop-blur-xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-white/60">Mood Line</p>
+        <p class="mt-3 text-sm leading-7 text-white/80">{manifest.moodLine}</p>
+      </div>
+    </div>
+  </div>
+</section>

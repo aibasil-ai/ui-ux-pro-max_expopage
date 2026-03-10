@@ -1,0 +1,101 @@
+---
+import ItemActionBar from '../../components/actions/ItemActionBar.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getStyles } from '../../lib/content/get-styles';
+import { getColors } from '../../lib/content/get-colors';
+import { getTypography } from '../../lib/content/get-typography';
+import { buildPrompt } from '../../lib/prompt-builder';
+import { getStyleManifest } from '../../lib/style-manifests';
+import { styleHeroRegistry } from '../../components/style/StyleHeroRegistry';
+import { styleSectionRegistry } from '../../components/style/StyleSectionRegistry';
+import GeneralPreview from '../../components/style/previews/GeneralPreview.astro';
+import LandingPreview from '../../components/style/previews/LandingPreview.astro';
+import DashboardPreview from '../../components/style/previews/DashboardPreview.astro';
+
+export async function getStaticPaths() {
+  const styles = await getStyles();
+  return styles.map((style) => ({
+    params: { slug: style.slug },
+    props: { style }
+  }));
+}
+
+const { style } = Astro.props;
+const manifest = getStyleManifest(style);
+const HeroComponent = styleHeroRegistry[manifest.heroVariant];
+const previewMap = {
+  general: GeneralPreview,
+  landing: LandingPreview,
+  dashboard: DashboardPreview
+};
+const PreviewComponent = previewMap[manifest.previewVariant];
+const colors = await getColors();
+const typography = await getTypography();
+const relatedColor = colors.find((item) => item.title === style.title) ?? colors[0];
+const relatedTypography = typography.find((item) => String(item.raw['Mood/Style Keywords'] || '').toLowerCase().includes(style.title.split(' ')[0].toLowerCase())) ?? typography[0];
+const pseudoProduct = {
+  ...style,
+  raw: {
+    ...style.raw,
+    'Dashboard Style (if applicable)': style.title,
+    'Color Palette Focus': style.raw['Primary Colors'],
+    'Landing Page Pattern': style.raw['Best For'],
+    'Key Considerations': style.summary,
+    'Primary Style Recommendation': style.title,
+    'Secondary Styles': style.raw['Best For'],
+    Keywords: style.raw['Keywords']
+  }
+};
+const previewPrompt = buildPrompt({
+  product: pseudoProduct,
+  style,
+  color: relatedColor,
+  typography: relatedTypography,
+  landing: null,
+  dashboardLabel: style.title,
+  reasoning: null
+});
+const href = `/styles/${style.slug}`;
+---
+
+<BaseLayout title={`${style.title} · Style Showcase`} description={style.summary}>
+  <section class="container-shell py-16 md:py-20">
+    <a href="/#product-picker" class="text-sm font-medium text-slate-500 hover:text-slate-900">← 回到首頁入口</a>
+
+    <div class="mt-6 space-y-8">
+      <HeroComponent style={style} manifest={manifest} />
+
+      <ItemActionBar
+        id={`styles:${style.slug}`}
+        title={style.title}
+        href={href}
+        dataset="風格"
+        summary={style.summary}
+        relatedLinks={[
+          { href: `/colors/${relatedColor.slug}`, label: '相容配色' },
+          { href: `/typography/${relatedTypography.slug}`, label: '相容字體' },
+          { href: '/rules', label: '查看規則中心' },
+          { href: '/rules/ux', label: '看 UX 指南' }
+        ]}
+      />
+
+      <PreviewComponent style={style} accentMode={manifest.accentMode} />
+
+      <div class="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
+        {manifest.sectionOrder.map((sectionId) => {
+          const Section = styleSectionRegistry[sectionId];
+
+          if (sectionId === 'prompt') {
+            return <Section title={style.title} prompt={previewPrompt} keywords={style.raw['Keywords']} />;
+          }
+
+          if (sectionId === 'compatibility') {
+            return <Section style={style} accentMode={manifest.accentMode} />;
+          }
+
+          return <Section style={style} />;
+        })}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
