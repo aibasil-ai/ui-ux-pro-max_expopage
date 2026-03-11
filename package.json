@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build:data": "node scripts/build-data.mjs",
+    "build:style-palette": "node scripts/generate-style-theme-palette-doc.mjs",
     "build": "npm run build:data && astro build",
     "preview": "astro preview",
     "check": "astro check",
