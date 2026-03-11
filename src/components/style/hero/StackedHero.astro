@@ -1,16 +1,18 @@
 ---
 import type { StyleRecord } from '../../../lib/content/get-styles';
 import type { StyleManifest } from '../../../lib/style-manifests/types';
+import { buildStyleShowcaseTheme } from '../../../lib/style-showcase-theme';
 interface Props { style: StyleRecord; manifest: StyleManifest; }
 const { style, manifest } = Astro.props;
+const theme = buildStyleShowcaseTheme(style, manifest);
 ---
-<section class="rounded-[2.5rem] border border-slate-200 bg-white/90 p-8 shadow-sm shadow-slate-950/5">
-  <p class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">{manifest.heroKicker}</p>
-  <h1 class="mt-4 text-5xl font-semibold tracking-tight text-slate-950 md:text-6xl">{style.title}</h1>
-  <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{manifest.perspective}</p>
+<section class={`rounded-[2.5rem] border p-8 shadow-sm ${theme.motionClass}`} style="border-color:var(--ss-border);background:var(--ss-panel);box-shadow:0 14px 30px -24px var(--ss-accent);">
+  <p class="text-sm font-semibold uppercase tracking-[0.22em]" style="color:var(--ss-muted);">{manifest.heroKicker}</p>
+  <h1 class="mt-4 text-5xl font-semibold tracking-tight md:text-6xl" style="color:var(--ss-text);">{style.title}</h1>
+  <p class="mt-5 max-w-3xl text-lg leading-8" style="color:var(--ss-muted);">{manifest.perspective}</p>
   <div class="mt-8 grid gap-4 md:grid-cols-3">
-    <div class="rounded-[1.5rem] bg-slate-100 p-4 text-sm leading-7 text-slate-700">{manifest.moodLine}</div>
-    <div class="rounded-[1.5rem] bg-slate-100 p-4 text-sm leading-7 text-slate-700">{style.raw['Era/Origin']}</div>
-    <div class="rounded-[1.5rem] bg-slate-950 p-4 text-sm leading-7 text-slate-100">{style.raw['Complexity']}</div>
+    <div class="rounded-[1.5rem] p-4 text-sm leading-7" style="background:var(--ss-panel-soft);color:var(--ss-text);">{manifest.moodLine}</div>
+    <div class="rounded-[1.5rem] p-4 text-sm leading-7" style="background:var(--ss-panel-soft);color:var(--ss-text);">{style.raw['Era/Origin']}</div>
+    <div class="rounded-[1.5rem] p-4 text-sm leading-7" style="background:linear-gradient(135deg,var(--ss-accent),var(--ss-accent-2));color:white;">{style.raw['Complexity']}</div>
   </div>
 </section>

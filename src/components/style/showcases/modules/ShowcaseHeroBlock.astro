@@ -1,0 +1,24 @@
+---
+import { buildStyleShowcaseTheme } from '../../../../lib/style-showcase-theme';
+
+const { style, manifest } = Astro.props;
+const raw = style && style.raw ? style.raw : {};
+const title = style && style.title ? style.title : 'Style Showcase';
+const summary = style && style.summary ? style.summary : '專屬風格展示';
+const moodLine = manifest && manifest.moodLine ? manifest.moodLine : (raw['Effects & Animation'] || raw['Keywords'] || '');
+const kicker = manifest && manifest.heroKicker ? manifest.heroKicker : 'Style Showcase';
+const theme = buildStyleShowcaseTheme(style ?? { slug: 'default-showcase', raw: {} }, manifest);
+---
+
+<div
+  class={`rounded-[2.5rem] border p-8 shadow-sm ${theme.motionClass}`}
+  style="border-color:var(--ss-border);background:var(--ss-panel);box-shadow:0 16px 40px -28px var(--ss-accent);"
+>
+  <p class="text-xs font-semibold uppercase tracking-[0.22em]" style="color:var(--ss-muted);">{kicker}</p>
+  <h2 class="mt-4 text-4xl font-semibold tracking-tight" style="color:var(--ss-text);">{title}</h2>
+  <p class="mt-3 max-w-3xl text-base leading-7" style="color:var(--ss-muted);">{summary}</p>
+  <div class="mt-6 flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.18em]" style="color:var(--ss-muted);">
+    <span class="rounded-full border px-3 py-1" style="border-color:var(--ss-border);background:var(--ss-panel-soft);">{moodLine}</span>
+    <span class="rounded-full border px-3 py-1" style="border-color:var(--ss-border);background:var(--ss-panel-soft);">{raw['Best For'] || 'Product Fit'}</span>
+  </div>
+</div>

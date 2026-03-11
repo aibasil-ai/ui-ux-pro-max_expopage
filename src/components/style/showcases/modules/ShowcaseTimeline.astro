@@ -1,0 +1,26 @@
+---
+import { buildStyleShowcaseTheme } from '../../../../lib/style-showcase-theme';
+
+const { style } = Astro.props;
+const raw = style && style.raw ? style.raw : {};
+const theme = buildStyleShowcaseTheme(style ?? { slug: 'default-showcase', raw: {} });
+const steps = String(raw['AI Prompt Keywords'] || raw['CSS/Technical Keywords'] || raw['Keywords'] || '')
+  .split(',')
+  .map((value) => value.trim())
+  .filter(Boolean)
+  .slice(0, 3);
+const fallback = ['Hero setup', 'Layout refinement', 'Interaction detail'];
+const items = steps.length > 0 ? steps : fallback;
+---
+
+<div class={`rounded-[2rem] border p-6 ${theme.motionClass}`} style="border-color:var(--ss-border);background:var(--ss-panel);">
+  <p class="text-xs font-semibold uppercase tracking-[0.18em]" style="color:var(--ss-muted);">Timeline</p>
+  <div class="mt-4 grid gap-4 md:grid-cols-3">
+    {items.map((item, index) => (
+      <div class={`rounded-[1.25rem] border p-4 ${theme.motionClass}`} style="border-color:var(--ss-border);background:var(--ss-panel-soft);">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em]" style="color:var(--ss-muted);">Step {index + 1}</p>
+        <p class="mt-2 text-sm font-semibold" style="color:var(--ss-text);">{item}</p>
+      </div>
+    ))}
+  </div>
+</div>

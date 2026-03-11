@@ -1,21 +1,23 @@
 ---
 import type { StyleRecord } from '../../../lib/content/get-styles';
 import type { StyleManifest } from '../../../lib/style-manifests/types';
+import { buildStyleShowcaseTheme } from '../../../lib/style-showcase-theme';
 interface Props { style: StyleRecord; manifest: StyleManifest; }
 const { style, manifest } = Astro.props;
+const theme = buildStyleShowcaseTheme(style, manifest);
 ---
 <section class="space-y-6">
   <div>
-    <p class="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">{manifest.heroKicker}</p>
-    <h1 class="mt-4 text-5xl font-semibold tracking-tight text-slate-950 md:text-6xl">{style.title}</h1>
+    <p class="text-sm font-semibold uppercase tracking-[0.22em]" style="color:var(--ss-muted);">{manifest.heroKicker}</p>
+    <h1 class="mt-4 text-5xl font-semibold tracking-tight md:text-6xl" style="color:var(--ss-text);">{style.title}</h1>
   </div>
   <div class="grid gap-4 md:grid-cols-3">
-    <div class="rounded-[1.75rem] border border-slate-200 bg-white/80 p-6 md:col-span-2">
-      <p class="text-base leading-8 text-slate-600">{manifest.perspective}</p>
+    <div class={`rounded-[1.75rem] border p-6 md:col-span-2 ${theme.motionClass}`} style="border-color:var(--ss-border);background:var(--ss-panel);">
+      <p class="text-base leading-8" style="color:var(--ss-muted);">{manifest.perspective}</p>
     </div>
-    <div class="rounded-[1.75rem] border border-slate-200 bg-slate-950 p-6 text-white">
-      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Mood</p>
-      <p class="mt-3 text-sm leading-7 text-slate-200">{manifest.moodLine}</p>
+    <div class={`rounded-[1.75rem] border p-6 text-white ${theme.motionClass}`} style="border-color:var(--ss-border);background:linear-gradient(135deg,var(--ss-accent),var(--ss-accent-2));">
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-white/70">Mood</p>
+      <p class="mt-3 text-sm leading-7 text-white/85">{manifest.moodLine}</p>
     </div>
   </div>
 </section>

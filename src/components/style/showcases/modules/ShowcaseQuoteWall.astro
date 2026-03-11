@@ -1,0 +1,21 @@
+---
+import { buildStyleShowcaseTheme } from '../../../../lib/style-showcase-theme';
+
+const { style } = Astro.props;
+const raw = style && style.raw ? style.raw : {};
+const theme = buildStyleShowcaseTheme(style ?? { slug: 'default-showcase', raw: {} });
+const keywords = String(raw['Keywords'] || '').split(',').map((value) => value.trim()).filter(Boolean);
+const quotes = keywords.length > 0 ? keywords.slice(0, 4) : ['Focus', 'Rhythm', 'Contrast', 'Clarity'];
+---
+
+<div class={`rounded-[2rem] border p-6 ${theme.motionClass}`} style="border-color:var(--ss-border);background:var(--ss-panel);">
+  <p class="text-xs font-semibold uppercase tracking-[0.18em]" style="color:var(--ss-muted);">Quote Wall</p>
+  <div class="mt-4 grid gap-3 md:grid-cols-2">
+    {quotes.map((quote, index) => (
+      <div class={`rounded-[1.25rem] border p-4 ${theme.motionClass}`} style="border-color:var(--ss-border);background:var(--ss-panel-soft);">
+        <p class="text-sm font-semibold" style="color:var(--ss-text);">“{quote}”</p>
+        <p class="mt-2 text-xs" style="color:var(--ss-muted);">Tone {index + 1}</p>
+      </div>
+    ))}
+  </div>
+</div>

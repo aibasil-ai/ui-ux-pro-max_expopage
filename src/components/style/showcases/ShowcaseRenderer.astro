@@ -1,0 +1,50 @@
+---
+import ShowcaseHeroBlock from './modules/ShowcaseHeroBlock.astro';
+import ShowcaseMetricGrid from './modules/ShowcaseMetricGrid.astro';
+import ShowcaseFeatureCards from './modules/ShowcaseFeatureCards.astro';
+import ShowcaseTimeline from './modules/ShowcaseTimeline.astro';
+import ShowcaseVisualMotif from './modules/ShowcaseVisualMotif.astro';
+import ShowcaseCTASection from './modules/ShowcaseCTASection.astro';
+import ShowcasePaletteStack from './modules/ShowcasePaletteStack.astro';
+import ShowcaseTypographyPanel from './modules/ShowcaseTypographyPanel.astro';
+import ShowcaseDeviceFrame from './modules/ShowcaseDeviceFrame.astro';
+import ShowcaseQuoteWall from './modules/ShowcaseQuoteWall.astro';
+
+interface ModuleRecipe {
+  type: string;
+  props?: Record<string, unknown>;
+}
+
+interface Props {
+  recipe: ModuleRecipe[];
+  style: unknown;
+  manifest?: unknown;
+  relatedColor?: unknown;
+  relatedTypography?: unknown;
+  previewPrompt?: string;
+}
+
+const { recipe, ...context } = Astro.props;
+
+const registry: Record<string, unknown> = {
+  hero: ShowcaseHeroBlock,
+  metrics: ShowcaseMetricGrid,
+  features: ShowcaseFeatureCards,
+  timeline: ShowcaseTimeline,
+  motif: ShowcaseVisualMotif,
+  cta: ShowcaseCTASection,
+  palette: ShowcasePaletteStack,
+  typography: ShowcaseTypographyPanel,
+  device: ShowcaseDeviceFrame,
+  quotes: ShowcaseQuoteWall
+};
+---
+
+<div class="space-y-6">
+  {recipe.map((step) => {
+    const Module = registry[step.type];
+    if (!Module) return null;
+    const moduleProps = { ...context, ...(step.props ?? {}) };
+    return <Module {...moduleProps} />;
+  })}
+</div>

@@ -1,0 +1,18 @@
+---
+import { buildStyleShowcaseTheme } from '../../../../lib/style-showcase-theme';
+
+const { style, manifest } = Astro.props;
+const theme = buildStyleShowcaseTheme(style ?? { slug: 'default-showcase', raw: {} }, manifest);
+---
+
+<div
+  class={`rounded-[2rem] border p-6 ${theme.motionClass}`}
+  style="border-color:var(--ss-border);background:linear-gradient(140deg,var(--ss-accent),var(--ss-accent-2));"
+>
+  <p class="text-xs font-semibold uppercase tracking-[0.18em]" style={`color:${theme.isDark ? '#E2E8F0' : '#0F172A'};`}>Visual Motif</p>
+  <div class="mt-4 grid gap-3 md:grid-cols-3">
+    <div class="h-20 rounded-[1.25rem] bg-white/70"></div>
+    <div class="h-20 rounded-[1.25rem] bg-black/10"></div>
+    <div class="h-20 rounded-[1.25rem] bg-white/40"></div>
+  </div>
+</div>

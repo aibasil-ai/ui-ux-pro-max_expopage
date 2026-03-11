@@ -6,11 +6,8 @@ import { getColors } from '../../lib/content/get-colors';
 import { getTypography } from '../../lib/content/get-typography';
 import { buildPrompt } from '../../lib/prompt-builder';
 import { getStyleManifest } from '../../lib/style-manifests';
-import { styleHeroRegistry } from '../../components/style/StyleHeroRegistry';
-import { styleSectionRegistry } from '../../components/style/StyleSectionRegistry';
-import GeneralPreview from '../../components/style/previews/GeneralPreview.astro';
-import LandingPreview from '../../components/style/previews/LandingPreview.astro';
-import DashboardPreview from '../../components/style/previews/DashboardPreview.astro';
+import { styleShowcaseRegistry } from '../../components/style/StyleShowcaseRegistry';
+import MissingShowcase from '../../components/style/showcases/MissingShowcase.astro';
 
 export async function getStaticPaths() {
   const styles = await getStyles();
@@ -22,13 +19,6 @@ export async function getStaticPaths() {
 
 const { style } = Astro.props;
 const manifest = getStyleManifest(style);
-const HeroComponent = styleHeroRegistry[manifest.heroVariant];
-const previewMap = {
-  general: GeneralPreview,
-  landing: LandingPreview,
-  dashboard: DashboardPreview
-};
-const PreviewComponent = previewMap[manifest.previewVariant];
 const colors = await getColors();
 const typography = await getTypography();
 const relatedColor = colors.find((item) => item.title === style.title) ?? colors[0];
@@ -56,6 +46,10 @@ const previewPrompt = buildPrompt({
   reasoning: null
 });
 const href = `/styles/${style.slug}`;
+const showcaseModules = import.meta.glob('../../components/style/showcases/*.astro', { eager: true });
+const showcasePath = styleShowcaseRegistry[style.slug];
+const Showcase =
+  (showcasePath && (showcaseModules[showcasePath] as { default: unknown })?.default) ?? MissingShowcase;
 ---
 
 <BaseLayout title={`${style.title} · Style Showcase`} description={style.summary}>
@@ -63,8 +57,6 @@ const href = `/styles/${style.slug}`;
     <a href="/#product-picker" class="text-sm font-medium text-slate-500 hover:text-slate-900">← 回到首頁入口</a>
 
     <div class="mt-6 space-y-8">
-      <HeroComponent style={style} manifest={manifest} />
-
       <ItemActionBar
         id={`styles:${style.slug}`}
         title={style.title}
@@ -79,23 +71,13 @@ const href = `/styles/${style.slug}`;
         ]}
       />
 
-      <PreviewComponent style={style} accentMode={manifest.accentMode} />
-
-      <div class="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
-        {manifest.sectionOrder.map((sectionId) => {
-          const Section = styleSectionRegistry[sectionId];
-
-          if (sectionId === 'prompt') {
-            return <Section title={style.title} prompt={previewPrompt} keywords={style.raw['Keywords']} />;
-          }
-
-          if (sectionId === 'compatibility') {
-            return <Section style={style} accentMode={manifest.accentMode} />;
-          }
-
-          return <Section style={style} />;
-        })}
-      </div>
+      <Showcase
+        style={style}
+        manifest={manifest}
+        relatedColor={relatedColor}
+        relatedTypography={relatedTypography}
+        previewPrompt={previewPrompt}
+      />
     </div>
   </section>
 </BaseLayout>

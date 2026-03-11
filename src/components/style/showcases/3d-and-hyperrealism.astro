@@ -1,0 +1,37 @@
+---
+import ShowcaseLayout from './ShowcaseLayout.astro';
+import ShowcaseRenderer from './ShowcaseRenderer.astro';
+import SplitHero from '../hero/SplitHero.astro';
+import StackedHero from '../hero/StackedHero.astro';
+import EditorialHero from '../hero/EditorialHero.astro';
+import ImmersiveHero from '../hero/ImmersiveHero.astro';
+import MetricsHero from '../hero/MetricsHero.astro';
+import GalleryHero from '../hero/GalleryHero.astro';
+
+const { style, manifest, relatedColor, relatedTypography, previewPrompt } = Astro.props;
+const heroVariant = 'stacked';
+const heroRegistry = {
+  split: SplitHero,
+  stacked: StackedHero,
+  editorial: EditorialHero,
+  immersive: ImmersiveHero,
+  metrics: MetricsHero,
+  gallery: GalleryHero
+};
+const Hero = heroRegistry[heroVariant] ?? SplitHero;
+const recipe = ["motif","cta","metrics","features"];
+---
+
+<ShowcaseLayout title={style.title} description={style.summary} style={style} manifest={manifest}>
+  <div data-showcase='3d-and-hyperrealism' class='space-y-6'>
+    <Hero style={style} manifest={manifest} />
+    <ShowcaseRenderer
+      recipe={recipe.map((item) => ({ type: item }))}
+      style={style}
+      manifest={manifest}
+      relatedColor={relatedColor}
+      relatedTypography={relatedTypography}
+      previewPrompt={previewPrompt}
+    />
+  </div>
+</ShowcaseLayout>
