@@ -8,11 +8,11 @@ const keywords = String(raw['Keywords'] || '').split(',').map((value) => value.t
 const quotes = keywords.length > 0 ? keywords.slice(0, 4) : ['Focus', 'Rhythm', 'Contrast', 'Clarity'];
 ---
 
-<div class={`rounded-[2rem] border p-6 ${theme.motionClass}`} style="border-color:var(--ss-border);background:var(--ss-panel);">
+<div class={`border p-6 ${theme.motionClass}`} style="border-width:var(--ss-border-width);border-radius:var(--ss-radius-panel);border-color:var(--ss-border);background:var(--ss-panel);">
   <p class="text-xs font-semibold uppercase tracking-[0.18em]" style="color:var(--ss-muted);">Quote Wall</p>
   <div class="mt-4 grid gap-3 md:grid-cols-2">
     {quotes.map((quote, index) => (
-      <div class={`rounded-[1.25rem] border p-4 ${theme.motionClass}`} style="border-color:var(--ss-border);background:var(--ss-panel-soft);">
+      <div class={`border p-4 ${theme.motionClass}`} style="border-width:var(--ss-border-width);border-radius:var(--ss-radius-card);border-color:var(--ss-border);background:var(--ss-panel-soft);box-shadow:var(--ss-shadow-soft);">
         <p class="text-sm font-semibold" style="color:var(--ss-text);">“{quote}”</p>
         <p class="mt-2 text-xs" style="color:var(--ss-muted);">Tone {index + 1}</p>
       </div>

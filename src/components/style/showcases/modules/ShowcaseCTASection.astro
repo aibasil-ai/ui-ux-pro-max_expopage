@@ -6,16 +6,16 @@ const title = style && style.title ? style.title : 'Style';
 const summary = style && style.summary ? style.summary : '調整 CTA 文案與視覺節奏。';
 const theme = buildStyleShowcaseTheme(style ?? { slug: 'default-showcase', raw: {} });
 const buttonStyle = theme.isDark
-  ? 'background:#E2E8F0;color:#0F172A;border:1px solid #E2E8F0;'
-  : 'background:#FFFFFF;color:#0F172A;border:1px solid #FFFFFF;';
+  ? 'background:#E2E8F0;color:#0F172A;border-color:#E2E8F0;'
+  : 'background:#FFFFFF;color:#0F172A;border-color:#FFFFFF;';
 ---
 
 <div
-  class={`rounded-[2rem] border p-6 text-white ${theme.motionClass}`}
-  style="border-color:var(--ss-border);background:linear-gradient(135deg,var(--ss-accent),var(--ss-accent-2));"
+  class={`border p-6 text-white ${theme.motionClass}`}
+  style="border-width:var(--ss-border-width);border-radius:var(--ss-radius-panel);border-color:var(--ss-border);background:linear-gradient(135deg,var(--ss-accent),var(--ss-accent-2));box-shadow:var(--ss-shadow-strong);"
 >
   <p class="text-xs font-semibold uppercase tracking-[0.18em] text-white/70">CTA Focus</p>
   <h3 class="mt-3 text-2xl font-semibold">用 {title} 收斂轉換</h3>
   <p class="mt-3 text-sm leading-7 text-white/85">{summary}</p>
-  <div class={`mt-4 inline-flex rounded-full px-4 py-2 text-sm font-semibold ${theme.motionClass}`} style={buttonStyle}>立即開始</div>
+  <div class={`mt-4 inline-flex border px-4 py-2 text-sm font-semibold ${theme.motionClass}`} style={`${buttonStyle}border-width:var(--ss-border-width);border-radius:var(--ss-radius-pill);box-shadow:var(--ss-shadow-soft);`}>立即開始</div>
 </div>

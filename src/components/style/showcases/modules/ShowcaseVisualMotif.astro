@@ -6,13 +6,13 @@ const theme = buildStyleShowcaseTheme(style ?? { slug: 'default-showcase', raw: 
 ---
 
 <div
-  class={`rounded-[2rem] border p-6 ${theme.motionClass}`}
-  style="border-color:var(--ss-border);background:linear-gradient(140deg,var(--ss-accent),var(--ss-accent-2));"
+  class={`border p-6 ${theme.motionClass}`}
+  style="border-width:var(--ss-border-width);border-radius:var(--ss-radius-panel);border-color:var(--ss-border);background:linear-gradient(140deg,var(--ss-accent),var(--ss-accent-2));box-shadow:var(--ss-shadow-strong);"
 >
   <p class="text-xs font-semibold uppercase tracking-[0.18em]" style={`color:${theme.isDark ? '#E2E8F0' : '#0F172A'};`}>Visual Motif</p>
   <div class="mt-4 grid gap-3 md:grid-cols-3">
-    <div class="h-20 rounded-[1.25rem] bg-white/70"></div>
-    <div class="h-20 rounded-[1.25rem] bg-black/10"></div>
-    <div class="h-20 rounded-[1.25rem] bg-white/40"></div>
+    <div class="h-20 bg-white/70" style="border-radius:var(--ss-radius-card);"></div>
+    <div class="h-20 bg-black/10" style="border-radius:var(--ss-radius-card);"></div>
+    <div class="h-20 bg-white/40" style="border-radius:var(--ss-radius-card);"></div>
   </div>
 </div>

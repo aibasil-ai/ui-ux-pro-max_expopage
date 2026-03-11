@@ -8,14 +8,14 @@ const primary = raw['Primary Colors'] || 'Primary palette';
 const secondary = raw['Secondary Colors'] || 'Secondary palette';
 ---
 
-<div class={`rounded-[2rem] border p-6 ${theme.motionClass}`} style="border-color:var(--ss-border);background:var(--ss-panel);">
+<div class={`border p-6 ${theme.motionClass}`} style="border-width:var(--ss-border-width);border-radius:var(--ss-radius-panel);border-color:var(--ss-border);background:var(--ss-panel);">
   <p class="text-xs font-semibold uppercase tracking-[0.18em]" style="color:var(--ss-muted);">Palette Stack</p>
   <div class="mt-4 grid gap-4 md:grid-cols-2">
-    <div class="rounded-[1.5rem] border p-4" style="border-color:var(--ss-border);background:linear-gradient(135deg,var(--ss-panel-soft),var(--ss-bg-from));">
+    <div class="border p-4" style="border-width:var(--ss-border-width);border-radius:var(--ss-radius-card);border-color:var(--ss-border);background:linear-gradient(135deg,var(--ss-panel-soft),var(--ss-bg-from));">
       <p class="text-xs font-semibold uppercase tracking-[0.18em]" style="color:var(--ss-muted);">Primary</p>
       <p class="mt-2 text-sm" style="color:var(--ss-text);">{primary}</p>
     </div>
-    <div class="rounded-[1.5rem] border p-4" style="border-color:var(--ss-border);background:linear-gradient(135deg,var(--ss-panel-soft),var(--ss-bg-to));">
+    <div class="border p-4" style="border-width:var(--ss-border-width);border-radius:var(--ss-radius-card);border-color:var(--ss-border);background:linear-gradient(135deg,var(--ss-panel-soft),var(--ss-bg-to));">
       <p class="text-xs font-semibold uppercase tracking-[0.18em]" style="color:var(--ss-muted);">Secondary</p>
       <p class="mt-2 text-sm" style="color:var(--ss-text);">{secondary}</p>
     </div>

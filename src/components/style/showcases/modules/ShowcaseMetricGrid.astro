@@ -14,8 +14,8 @@ const metrics = [
 <div class="grid gap-4 md:grid-cols-3">
   {metrics.map((metric) => (
     <div
-      class={`rounded-[1.5rem] border p-5 ${theme.motionClass}`}
-      style="border-color:var(--ss-border);background:var(--ss-panel);"
+      class={`border p-5 ${theme.motionClass}`}
+      style="border-width:var(--ss-border-width);border-radius:var(--ss-radius-card);border-color:var(--ss-border);background:var(--ss-panel);"
     >
       <p class="text-xs font-semibold uppercase tracking-[0.18em]" style="color:var(--ss-muted);">{metric.label}</p>
       <p class="mt-3 text-3xl font-semibold" style="color:var(--ss-text);">{metric.value}</p>

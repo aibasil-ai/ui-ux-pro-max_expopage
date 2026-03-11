@@ -6,12 +6,12 @@ const title = style && style.title ? style.title : 'UI Preview';
 const theme = buildStyleShowcaseTheme(style ?? { slug: 'default-showcase', raw: {} });
 ---
 
-<div class={`rounded-[2rem] border p-6 ${theme.motionClass}`} style="border-color:var(--ss-border);background:var(--ss-panel);">
+<div class={`border p-6 ${theme.motionClass}`} style="border-width:var(--ss-border-width);border-radius:var(--ss-radius-panel);border-color:var(--ss-border);background:var(--ss-panel);">
   <p class="text-xs font-semibold uppercase tracking-[0.18em]" style="color:var(--ss-muted);">Device Frame</p>
-  <div class="mt-4 rounded-[1.75rem] border p-4" style="border-color:var(--ss-border);background:var(--ss-panel-soft);">
-    <div class="rounded-[1.25rem] p-4 shadow-sm" style="background:var(--ss-panel);box-shadow:0 10px 30px -24px var(--ss-accent);">
+  <div class="mt-4 border p-4" style="border-width:var(--ss-border-width);border-radius:var(--ss-radius-card);border-color:var(--ss-border);background:var(--ss-panel-soft);">
+    <div class="p-4 shadow-sm" style="border-radius:var(--ss-radius-card);background:var(--ss-panel);box-shadow:var(--ss-shadow-soft);">
       <p class="text-xs font-semibold uppercase tracking-[0.18em]" style="color:var(--ss-muted);">{title}</p>
-      <div class="mt-3 h-24 rounded-xl" style="background:linear-gradient(135deg,var(--ss-accent),var(--ss-accent-2));"></div>
+      <div class="mt-3 h-24" style="border-radius:var(--ss-radius-card);background:linear-gradient(135deg,var(--ss-accent),var(--ss-accent-2));"></div>
       <div class="mt-3 grid gap-2">
         <div class="h-3 rounded-full" style="background:var(--ss-bg-to);"></div>
         <div class="h-3 rounded-full" style="background:var(--ss-bg-to);"></div>
