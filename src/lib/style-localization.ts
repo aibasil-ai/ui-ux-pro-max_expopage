@@ -1,0 +1,81 @@
+const styleTraditionalChineseNames: Record<string, string> = {
+  'minimalism-and-swiss-style': '極簡與瑞士風',
+  'neumorphism': '新擬物',
+  'glassmorphism': '玻璃擬態',
+  'brutalism': '粗野主義',
+  '3d-and-hyperrealism': '3D 與超寫實',
+  'vibrant-and-block-based': '高彩色塊',
+  'dark-mode-oled': 'OLED 深色模式',
+  'accessible-and-ethical': '無障礙與倫理導向',
+  'claymorphism': '黏土擬態',
+  'aurora-ui': '極光介面',
+  'retro-futurism': '復古未來',
+  'flat-design': '扁平設計',
+  'skeuomorphism': '擬物化',
+  'liquid-glass': '液態玻璃',
+  'motion-driven': '動態驅動',
+  'micro-interactions': '微互動',
+  'inclusive-design': '共融設計',
+  'zero-interface': '零介面',
+  'soft-ui-evolution': '軟質介面進化',
+  'hero-centric-design': '主視覺導向',
+  'conversion-optimized': '轉換優化',
+  'feature-rich-showcase': '功能導覽型',
+  'minimal-and-direct': '極簡直達',
+  'social-proof-focused': '社會認同導向',
+  'interactive-product-demo': '互動式產品展示',
+  'trust-and-authority': '信任與權威',
+  'storytelling-driven': '敘事驅動',
+  'data-dense-dashboard': '高密度資料儀表板',
+  'heat-map-and-heatmap-style': '熱力圖導向',
+  'executive-dashboard': '高階管理儀表板',
+  'real-time-monitoring': '即時監控',
+  'drill-down-analytics': '下鑽分析',
+  'comparative-analysis-dashboard': '比較分析儀表板',
+  'predictive-analytics': '預測分析',
+  'user-behavior-analytics': '使用者行為分析',
+  'financial-dashboard': '金融儀表板',
+  'sales-intelligence-dashboard': '銷售情報儀表板',
+  'neubrutalism': '新粗野主義',
+  'bento-box-grid': '便當盒網格',
+  'y2k-aesthetic': 'Y2K 美學',
+  'cyberpunk-ui': '賽博龐克介面',
+  'organic-biophilic': '有機親生物',
+  'ai-native-ui': 'AI 原生介面',
+  'memphis-design': '孟菲斯設計',
+  'vaporwave': '蒸氣波',
+  'dimensional-layering': '多維層次',
+  'exaggerated-minimalism': '誇張極簡',
+  'kinetic-typography': '動態字體',
+  'parallax-storytelling': '視差敘事',
+  'swiss-modernism-2-0': '瑞士現代主義 2.0',
+  'hud-sci-fi-fui': 'HUD／科幻 FUI',
+  'pixel-art': '像素藝術',
+  'bento-grids': '便當式網格',
+  'spatial-ui-visionos': '空間介面（VisionOS）',
+  'e-ink-paper': '電子墨水／紙感',
+  'gen-z-chaos-maximalism': 'Z 世代混沌極繁',
+  'biomimetic-organic-2-0': '仿生有機 2.0',
+  'anti-polish-raw-aesthetic': '反精緻原生美學',
+  'tactile-digital-deformable-ui': '觸覺數位／可形變介面',
+  'nature-distilled': '自然萃取',
+  'interactive-cursor-design': '互動游標設計',
+  'voice-first-multimodal': '語音優先多模態',
+  '3d-product-preview': '3D 產品預覽',
+  'gradient-mesh-aurora-evolved': '漸層網格／極光進化',
+  'editorial-grid-magazine': '編輯網格／雜誌風',
+  'chromatic-aberration-rgb-split': '色差／RGB 分離',
+  'vintage-analog-retro-film': '復古類比底片'
+};
+
+export function getStyleTraditionalChineseName(slug: string) {
+  return styleTraditionalChineseNames[slug];
+}
+
+export function getStyleBilingualTitle(slug: string, englishTitle: string) {
+  const zh = getStyleTraditionalChineseName(slug);
+  if (!zh) return englishTitle;
+  return `${englishTitle}（${zh}）`;
+}
+
+export const allStyleTraditionalChineseNames = styleTraditionalChineseNames;

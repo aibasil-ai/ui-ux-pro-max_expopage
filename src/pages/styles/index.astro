@@ -4,13 +4,14 @@ import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
 import StyleIndexFilters from '../../components/style/StyleIndexFilters';
 import { getStyles } from '../../lib/content/get-styles';
 import { getStyleManifest } from '../../lib/style-manifests';
+import { getStyleBilingualTitle } from '../../lib/style-localization';
 
 const styles = await getStyles();
 const items = styles.map((style) => {
   const manifest = getStyleManifest(style);
   return {
     slug: style.slug,
-    title: style.title,
+    title: getStyleBilingualTitle(style.slug, style.title),
     category: style.category,
     summary: style.summary,
     accentMode: manifest.accentMode,

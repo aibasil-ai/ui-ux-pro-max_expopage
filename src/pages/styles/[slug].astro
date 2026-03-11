@@ -6,6 +6,7 @@ import { getColors } from '../../lib/content/get-colors';
 import { getTypography } from '../../lib/content/get-typography';
 import { buildPrompt } from '../../lib/prompt-builder';
 import { getStyleManifest } from '../../lib/style-manifests';
+import { getStyleBilingualTitle } from '../../lib/style-localization';
 import { styleShowcaseRegistry } from '../../components/style/StyleShowcaseRegistry';
 import MissingShowcase from '../../components/style/showcases/MissingShowcase.astro';
 
@@ -46,20 +47,22 @@ const previewPrompt = buildPrompt({
   reasoning: null
 });
 const href = `/styles/${style.slug}`;
+const localizedStyleTitle = getStyleBilingualTitle(style.slug, style.title);
+const localizedStyle = { ...style, title: localizedStyleTitle };
 const showcaseModules = import.meta.glob('../../components/style/showcases/*.astro', { eager: true });
 const showcasePath = styleShowcaseRegistry[style.slug];
 const Showcase =
   (showcasePath && (showcaseModules[showcasePath] as { default: unknown })?.default) ?? MissingShowcase;
 ---
 
-<BaseLayout title={`${style.title} · Style Showcase`} description={style.summary}>
+<BaseLayout title={`${localizedStyleTitle} · Style Showcase`} description={style.summary}>
   <section class="container-shell py-16 md:py-20">
     <a href="/#product-picker" class="text-sm font-medium text-slate-500 hover:text-slate-900">← 回到首頁入口</a>
 
     <div class="mt-6 space-y-8">
       <ItemActionBar
         id={`styles:${style.slug}`}
-        title={style.title}
+        title={localizedStyleTitle}
         href={href}
         dataset="風格"
         summary={style.summary}
@@ -72,7 +75,7 @@ const Showcase =
       />
 
       <Showcase
-        style={style}
+        style={localizedStyle}
         manifest={manifest}
         relatedColor={relatedColor}
         relatedTypography={relatedTypography}
